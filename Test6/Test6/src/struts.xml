@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+   
+    <!-- 0. 请求数据编码 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<!-- 1. 修改Struts默认的访问后缀 -->
+	<constant name="struts.action.extension" value="action,,"></constant>
+	<!-- 2. 修改xml自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	<!-- 3. 开启动态方法调用 (默认不开启)-->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<!-- 4. 修改上传文件的最大大小为30M -->
+	<constant name="struts.multipart.maxSize" value="31457280"/>
+	<!-- 5. 显示model -->
+    <constant name="struts.devMode" value="true" />
+
+    <constant name="struts.action.excludePattern" value="/css/.*,/images/.*,/js/.*,/ckeditor/.*/," /> 
+	
+	<package name="default" namespace="/" extends="struts-default">
+		
+		<action name="LoginAction" class="LoginAction" method="login">
+			<result name="adminMainFrame">/admin/mainFrame.jsp</result>
+			<result name="teacherMainFrame">/teacher/mainFrame.jsp</result>
+			<result name="studentMainFrame">/student/mainFrame.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+
+		<action name="admin-*" class="AdminAction" method="{1}">
+			<result name="allNoStatusStudents">/admin/checkStudent.jsp</result>
+			<result name="allNoStatusTeachers">/admin/checkTeacher.jsp</result>
+			<result name="adminMainFrame">/admin/mainFrame.jsp</result>
+			<result name="allNoDisplayContest">/admin/checkNoDisplayContest.jsp</result>
+			<result name="allNoDisplayMessage">/admin/checkNoDisplayMessage.jsp</result>
+			<result name="listContest">/admin/listContest.jsp</result>
+			<result name="lookTeacher">/admin/lookTeacher.jsp</result>
+		</action>
+
+		<action name="ContestAction" class="ContestAction" method="addContest">
+			<result name="adminMainFrame">/admin/mainFrame.jsp</result>
+			<result name="teacherMainFrame">/teacher/mainFrame.jsp</result>
+			<result name="addContest">/addContest.jsp</result>
+		</action>
+
+		<action name="MessageAction" class="MessageAction" method="addMessage">
+			<result name="adminMainFrame">/admin/mainFrame.jsp</result>
+			<result name="teacherMainFrame">/teacher/mainFrame.jsp</result>
+			<result name="addMessage">/addMessage.jsp</result>
+		</action>
+		
+		<action name="main-*" class="MainFrameAction" method="{1}">
+			<result name="mainFrame">/mainFrame.jsp</result>
+			<result name="knowContest">/knowContest.jsp</result>
+			<result name="knowMessage">/knowMessage.jsp</result>
+			
+			<result name="kownmoreContest">/kownmoreContest.jsp</result>
+			<result name="kownmoreMessage">/kownmoreMessage.jsp</result>
+
+			<result name="getPageContest">/getPageContest.jsp</result>
+			<result name="getPageMessage">/getPageMessage.jsp</result>
+			
+			<result name="download" type="stream">
+				<!-- 运行下载的文件的类型:指定为所有的二进制文件类型 -->
+			   <param name="contentType">application/octet-stream</param>
+			   <!-- 对应的是Action中属性： 返回流的属性【其实就是getAttrInputStream()】 -->
+			   <param name="inputName">attrInputStream</param>
+			   <!-- 下载头，包括：浏览器显示的文件名 -->
+			   <param name="contentDisposition">attachment;filename=${downFileName}</param>
+			 	<!-- 缓冲区大小设置 -->
+			   <param name="bufferSize">1024</param>
+			</result>
+		</action>	
+		
+		
+		<action name="student_*" class="StudentAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="fail">/student/register.jsp</result>
+			<result name="studentMainFrame">/student/mainFrame.jsp</result>
+			<result name="listSContest">/student/listSContest.jsp</result>
+		</action>
+
+		<action name="teacher_*" class="TeacherAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="fail">/teacher/register.jsp</result>
+			<result name="showStuContest">/teacher/showStuContest.jsp</result>
+			<result name="teacherMainFrame">/teacher/mainFrame.jsp</result>
+		</action>
+		
+    </package>
+    
+</struts>

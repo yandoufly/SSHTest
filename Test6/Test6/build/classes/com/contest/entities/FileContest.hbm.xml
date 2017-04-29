@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-28 13:12:58 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.contest.entities.FileContest" table="FILECONTEST">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="contest" class="com.contest.entities.Contest" fetch="join">
+            <column name="contestId" />
+        </many-to-one>
+        <property name="filename" type="java.lang.String">
+            <column name="filename" />
+        </property>
+        <property name="filepath" type="java.lang.String">
+            <column name="filepath" />
+        </property>
+    </class>
+</hibernate-mapping>

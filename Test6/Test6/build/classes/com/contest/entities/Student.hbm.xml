@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-28 13:12:58 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.contest.entities.Student" table="STUDENT">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="studentId" type="java.lang.Integer">
+            <column name="studentId" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" />
+        </property>
+        <property name="passwd" type="java.lang.String">
+            <column name="passwd" />
+        </property>
+        <property name="sex" type="java.lang.String">
+            <column name="sex" />
+        </property>
+        <property name="birthday" type="java.util.Date">
+            <column name="birthday" />
+        </property>
+        <property name="dept" type="java.lang.String">
+            <column name="dept" />
+        </property>
+        <property name="profess" type="java.lang.String">
+            <column name="profess" />
+        </property>
+        <property name="telephone" type="java.lang.String">
+            <column name="telephone" />
+        </property>
+        <property name="qq" type="java.lang.String">
+            <column name="QQ" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>
