@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="com.exam.entities.Answer" table="tb_answer">
+		<!-- 映射主键 -->
+		<id name="answerId" column="answerId">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 映射其他字段 -->
+		<property name="mark" ></property>
+		<property name="yes"></property>
+		
+		</class>
+		
+</hibernate-mapping>

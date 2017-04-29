@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="question" extends="basePackage">
+		<!-- 添加 -->
+        <action name="addQuestionPage">
+        	<result>/addQuestion.jsp</result>
+        </action>
+		<action name="addQuestion" class="QuestionAction" method="addQuestion">
+			<result name="success">/ok.jsp</result>
+			<result name="input">/addQuestion.jsp</result>
+		</action>
+		 
+		<action name="showPageQuestion" class="QuestionAction" method="showPageQuestion">
+			<result name="showPageQuestion">/showPageQuestion.jsp</result>
+		</action>
+		<!-- 删除 -->
+		<action name="deleteQuestion" class="QuestionAction" method="deleteQuestion">
+			<result name="success" type="chain">showPageQuestion</result>
+		</action>
+		<!-- 修改 -->
+		<action name="showQuestionInfo" class="QuestionAction" method="showQuestionInfo">
+			<result name="success">/updateQuestion.jsp</result>
+		</action>
+		<action name="updateQuestion" class="QuestionAction" method="updateQuestion">
+			<result name="success"  type="chain">showPageQuestion</result>
+		</action>
+	</package>
+</struts>

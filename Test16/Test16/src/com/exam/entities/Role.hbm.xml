@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="com.exam.entities.Role" table="tb_role">
+		<!-- 映射主键 -->
+		<id name="rid" column="rid">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 映射其他字段 -->
+		<property name="roleName" ></property>
+		
+		<!-- 和工能多对多 -->
+		<set name="modules" lazy="false">
+			<key column="rid"></key>
+			<many-to-many class="com.exam.entities.Module" column="mid"></many-to-many>
+		</set>
+		
+		</class>
+		
+</hibernate-mapping>

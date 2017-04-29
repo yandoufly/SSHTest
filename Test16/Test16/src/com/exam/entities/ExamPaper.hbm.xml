@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="com.exam.entities.ExamPaper" table="tb_exampaper">
+		<!-- 映射主键 -->
+		<id name="epId" column="epId">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 映射其他字段 -->
+		<property name="startTime"></property>
+		<property name="commitTime" ></property>
+		<property name="state" ></property>
+		<property name="score" ></property>
+		
+		<!-- 映射多对一 -->
+		<many-to-one name="exam" class="com.exam.entities.Exam" column="examId"></many-to-one>
+		<many-to-one name="student" class="com.exam.entities.Student" column="sid"></many-to-one>
+		
+		<!-- 一对多 -->
+		<list name="records" cascade="all">
+			<key column="epId"></key>
+			<index column="epIndex"></index>
+			<one-to-many class="com.exam.entities.StudentQuestionRecord"/>
+		</list>
+		</class>
+		
+</hibernate-mapping>

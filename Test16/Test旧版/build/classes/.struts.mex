@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="superPackage" location="0,0" size="0,0" />
+  <package name="question" location="0,0" size="0,0">
+    <action name="addQuestionPage" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="addQuestion.jsp" />
+      </result>
+    </action>
+    <action name="addQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+      <result name="input">
+        <resourceEdge source="input" routing="0" target="addQuestion.jsp" />
+      </result>
+    </action>
+    <action name="showAllQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="showAllQuestion.jsp" />
+      </result>
+    </action>
+    <action name="deleteQuestion" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="showQuestionInfo" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="updateQuestion.jsp" />
+      </result>
+    </action>
+    <action name="updateQuestion" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+  </package>
+  <package name="exam" location="0,0" size="0,0">
+    <action name="addExam" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+    </action>
+    <action name="showAllExam" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="showAllExam.jsp" />
+      </result>
+    </action>
+    <action name="createExamPaper" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="showMyPaper" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="showMyPaper.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="paper" location="0,0" size="0,0">
+    <action name="beginDoQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="doQuestion.jsp" />
+      </result>
+    </action>
+    <action name="continueQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="doQuestion.jsp" />
+      </result>
+    </action>
+    <action name="nextQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="doQuestion.jsp" />
+      </result>
+    </action>
+    <action name="preQuestion" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="doQuestion.jsp" />
+      </result>
+    </action>
+    <action name="commitExamPaper" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="result.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="student" location="0,0" size="0,0">
+    <action name="addStudent" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+    </action>
+    <action name="login" location="0,0" size="0,0">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="index.jsp" />
+      </result>
+      <result name="faild">
+        <resourceEdge source="faild" routing="0" target="login.html" />
+      </result>
+    </action>
+  </package>
+  <webResource name="ok.jsp" path="/ok.jsp" location="0,0" size="0,0" />
+  <webResource name="addQuestion.jsp" path="/addQuestion.jsp" location="0,0" size="0,0" />
+  <webResource name="showAllQuestion.jsp" path="/showAllQuestion.jsp" location="0,0" size="0,0" />
+  <webResource name="updateQuestion.jsp" path="/updateQuestion.jsp" location="0,0" size="0,0" />
+  <webResource name="showAllExam.jsp" path="/showAllExam.jsp" location="0,0" size="0,0" />
+  <webResource name="error.jsp" path="/error.jsp" location="0,0" size="0,0" />
+  <webResource name="showMyPaper.jsp" path="/showMyPaper.jsp" location="0,0" size="0,0" />
+  <webResource name="index.jsp" path="/index.jsp" location="0,0" size="0,0" />
+  <webResource name="login.html" path="/login.html" location="0,0" size="0,0" />
+  <webResource name="doQuestion.jsp" path="/doQuestion.jsp" location="0,0" size="0,0" />
+  <webResource name="result.jsp" path="/result.jsp" location="0,0" size="0,0" />
+  <include file="struts_role.xml" location="0,0" size="0,0" />
+  <extendsEdge source="question" target="superPackage" routing="0" />
+  <extendsEdge source="exam" target="superPackage" routing="0" />
+  <extendsEdge source="paper" target="superPackage" routing="0" />
+  <extendsEdge source="student" target="superPackage" routing="0" />
+</Struts2Diagram>
+

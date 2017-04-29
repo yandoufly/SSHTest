@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="exam" extends="basePackage">
+		<action name="newExamPage">
+			<result>newExam.jsp</result>
+		</action>
+		<action name="addExam" class="ExamAction" method="addExam">
+			<result name="success">/ok.jsp</result>
+		</action>
+
+		<action name="showAllExam" class="ExamAction" method="showAllExam">
+			<result name="success">/showAllExam.jsp</result>
+		</action>
+
+		<action name="createExamPaper" class="ExamAction" method="createExamPaper">
+			<result name="success">/ok.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+
+		<action name="showMyPaper" class="ExamAction" method="showMyPaper">
+			<result name="success">/showMyPaper.jsp</result>
+		</action>
+	</package>
+</struts>

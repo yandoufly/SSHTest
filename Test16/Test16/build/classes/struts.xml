@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="basePackage" namespace="/" extends="struts-default">
+		<!-- 声明拦截器 -->
+		<interceptors>
+			<interceptor name="LoginInterceptor" class="com.exam.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="MyDefaultStack">
+				<interceptor-ref name="LoginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="MyDefaultStack"></default-interceptor-ref>
+		
+		<!-- 全局结果定义区 -->
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="timeOut">/timeOut.jsp</result>
+		</global-results>
+	
+	</package>
+
+	<!-- 与问题相关的action -->	
+    <include file="struts_question.xml"></include>
+    
+	<!-- 与用户相关的action -->
+    <include file="struts_user.xml"></include>
+
+	<!-- 与角色权限相关的action -->
+    <include file="struts_role.xml"></include>
+		
+	<!-- 与考试相关的action -->
+    <include file="struts_exam.xml"></include>
+	
+	<!-- 与试卷相关的action -->
+    <include file="struts_paper.xml"></include>
+
+</struts>

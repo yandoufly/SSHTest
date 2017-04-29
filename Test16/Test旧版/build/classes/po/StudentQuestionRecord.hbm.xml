@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="po.StudentQuestionRecord" table="tb_StudentQuestionRecord">
+		<!-- 映射主键 -->
+		<id name="sqrId" column="sqrId">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<many-to-one name="question" class="po.Question" column="qid"></many-to-one>
+		
+		<list name="answers" cascade="all">
+			<key column="sqrId"></key>
+			<index column="aIndex"></index>
+			<one-to-many class="po.Answer"/>
+		</list>
+		
+		</class>
+		
+</hibernate-mapping>

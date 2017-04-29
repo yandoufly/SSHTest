@@ -1,0 +1,47 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<!-- 用来创建session -->
+	<session-factory>
+		 
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/Exam</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">123456</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        
+        <!-- 配置JDBC连接属性
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">jdbc:oracle:thin:@127.0.0.1:1521:ORCL</property>
+        <property name="connection.username">scott</property>
+        <property name="connection.password">tiger</property>
+        <property name="dialect">org.hibernate.dialect.Oracle9iDialect</property>
+          -->
+         
+		<!-- 是否显示sql语句 -->
+        <property name="show_sql">true</property>
+		
+		<!-- 是否在创建sessionFactory的时候自动更新数据库 -->
+		<property name="hbm2ddl.auto">update</property>
+		
+		<!-- 把session的生命周期自动设置为当前线程 ,一旦配置了延迟加载过滤器，就不用这个了
+        <property name="current_session_context_class">thread</property>
+		-->
+		
+		<!-- 加入映射文件 -->
+		<mapping resource="po/Answer.hbm.xml"/>
+		<mapping resource="po/Exam.hbm.xml"/>
+		<mapping resource="po/ExamPaper.hbm.xml"/>
+		<mapping resource="po/Option.hbm.xml"/>
+		<mapping resource="po/Question.hbm.xml"/>
+		<mapping resource="po/Student.hbm.xml"/>
+		<mapping resource="po/Role.hbm.xml"/>
+		<mapping resource="po/Module.hbm.xml"/>
+		<mapping resource="po/StudentQuestionRecord.hbm.xml"/>
+
+	</session-factory>
+	
+
+</hibernate-configuration>

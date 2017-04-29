@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="role" location="10,165" size="665,350">
+    <action name="addRole" location="205,57" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+    </action>
+    <action name="deleteRole" location="205,162" size="150,41">
+      <result name="success" />
+    </action>
+    <action name="showAllRole" location="450,162" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="showAllRole.jsp" />
+      </result>
+    </action>
+    <action name="setRoleModules" location="450,267" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="roleModules.jsp" />
+      </result>
+    </action>
+    <action name="saveRoleModules" location="65,267" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="ok.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="ok.jsp" path="/ok.jsp" location="100,10" size="150,55" />
+  <webResource name="showAllRole.jsp" path="/role/showAllRole.jsp" location="456,10" size="150,55" />
+  <webResource name="roleModules.jsp" path="/role/roleModules.jsp" location="736,395" size="150,55" />
+</Struts2Diagram>
+

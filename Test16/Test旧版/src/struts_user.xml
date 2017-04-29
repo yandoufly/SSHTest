@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- 与用户相关action -->
+		<package name="student" extends="superPackage">
+		<action name="addStudent" class="action.StudentAction" method="addStudent">
+			<result name="success">/ok.jsp</result>
+		</action>
+		
+		<action name="login" class="action.StudentAction" method="login">
+			<result name="success">/index.jsp</result>
+			<result name="faild">/login.html</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="showAllUser" class="action.StudentAction" method="showAllUser">
+			<result name="success">/role/showalluser.jsp</result>
+		</action>
+		
+		<action name="setRole" class="action.StudentAction" method="setRole">
+			<result name="success">/role/setroles.jsp</result>
+		</action>
+		
+		<action name="saveRole" class="action.StudentAction" method="saveRole">
+			<result name="success">/ok.jsp</result>
+		</action>
+	</package>
+</struts>
+

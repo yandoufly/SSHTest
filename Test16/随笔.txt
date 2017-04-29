@@ -1,0 +1,81 @@
+1、
+老师生成试卷 试卷属性：考试名称、开考时间、考试时间、题量、总分
+
+2、
+学生登录系统后，点击"我的考试"，就可以看到这份试卷，点击开始考试，就进行答题，系统计时开始
+
+每页显示一道题，选择一个答案后，点击下一题，回答下一题
+
+当点击最后一题回答后，点击“提交”，计算总分开始与显示
+
+如果答题时间超时，则自动提交
+
+
+3、
+学生进行答题的时候，要对每道题的答案进行记录，以便查验
+
+
+4、
+试卷
+用户  
+考题  
+答案  
+时间  
+分数
+学生选择的答案
+
+5、
+考试
+试卷 考试1-n试卷 学生1-n试卷 
+学生 
+学生做题记录 试卷1-n学生做题记录 考题1-n学生做题记录  
+考题
+选项 考题1-n选项
+答案  学生做题记录1-n答案
+
+6、
+Question： id, content //内容
+Option：id, content //内容, mark //ABCD, yes //是否为正确答案
+Exam: examId, name //考试名称, examTime //考试时间, examQuestionCount //题量, examTotalScore //总分
+Student：sid，sname //名字，snumber //学号，spwd //密码
+ExamPaper: epId //编号， startTime //开考时间， exam //所属试卷-对象， studnet //所属学生-对象
+
+StudentQuestionRecord: sqrId //编号，examPaper //哪份试卷-对象，question //哪道题，List<Answer> answers //答案
+Answer: answerId //编号，mark //ABCD
+
+
+7. set方法的存放对象
+需要重写该对象类 的 equals 和 hashCode方法
+
+
+8、点击“下一题”时：
+记录本题所选的答案
+显示下一题曾经
+
+
+9、权限管理模块
+用户表(User)：uid //编号，name //名字
+功能表(Module)：mid //编号，moduleName //功能名字，
+用户功能表(UserModule)：  uid //用户编号，mid //功能编号
+
+
+权限管理的第一种方案：对用户直接授权
+优点：简单，适用于用户不太多的系统
+缺点：当用户很多的时候，维护权限不方便
+
+第二种方案：RBAC(基于角色权限控制) Rose-Base Access Control模型
+
+用户(User)：uid, name
+功能(Module)：mid, moduleName
+角色(Role)：rid, roleName
+用户角色表:uid, rid
+角色功能表：rid, mid
+
+Student: 新增Set<Role> roles
+Role:rid, roleName, Set<Module> modules
+Module:mid,moduleCode, moduleName
+
+
+
+
+

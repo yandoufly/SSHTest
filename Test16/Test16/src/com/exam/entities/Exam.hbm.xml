@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="com.exam.entities.Exam" table="tb_exam">
+		<!-- 映射主键 -->
+		<id name="examId" column="examId">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 映射其他字段 -->
+		<property name="examName" ></property>
+		<property name="examQuestionCount"></property>
+		<property name="examTime"></property>
+		<property name="examTotalScore"></property>
+		
+		</class>
+		
+</hibernate-mapping>

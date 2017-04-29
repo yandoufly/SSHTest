@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="paper" extends="basePackage">
+		<interceptors>
+			<interceptor name="AutoCommitInterceptor" class="com.exam.interceptor.AutoCommitInterceptor"></interceptor>
+			<interceptor name="PaperStateCheckInterceptor" class="com.exam.interceptor.PaperStateCheckInterceptor"></interceptor>
+		</interceptors>
+		<!-- 开始考试 -->
+		<action name="beginDoQuestion" class="PaperAction" method="beginDoQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="AutoCommitInterceptor"></interceptor-ref>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+		</action>
+		<!-- 继续考试 -->
+		<action name="continueQuestion" class="PaperAction" method="continueQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		<!-- 下一题 -->
+		<action name="nextQuestion" class="PaperAction" method="nextQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		<!-- 上一题 -->
+		<action name="preQuestion" class="PaperAction" method="preQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		<!-- 提交 -->
+		<action name="commitExamPaper" class="PaperAction" method="commitExamPaper">
+			<result name="success">/result.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+	</package>
+</struts>

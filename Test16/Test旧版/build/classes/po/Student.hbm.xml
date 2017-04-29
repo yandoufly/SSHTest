@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<!-- 映射类 -->
+	<class name="po.Student" table="tb_student">
+		<!-- 映射主键 -->
+		<id name="sid" column="sid">
+			<!-- 设置主键的生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 映射其他字段 -->
+		<property name="sname" ></property>
+		<property name="snumber"></property>
+		<property name="spwd"></property>
+
+		
+		<!-- 和角色多对多 -->
+		<set name="roles" lazy="false">
+			<key column="sid"></key><!-- 在中间表中我叫什么名字 -->
+			<many-to-many class="po.Role" column="rid"></many-to-many>
+		</set>
+		
+		</class>
+		
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="role" extends="basePackage">
+		<action name="addRolePage">
+			<result>addRole.jsp</result>
+		</action>
+		<action name="addRole" class="RoleAction" method="addRole">
+			<result name="success">/ok.jsp</result>
+		</action>
+		<action name="showAllRole" class="RoleAction" method="showAllRole">
+			<result name="success">/role/showAllRole.jsp</result>
+		</action>
+
+		<action name="deleteRole" class="RoleAction" method="deleteRole">
+			<result name="success" type="chain">showAllRole</result>
+		</action>
+
+		<action name="setRoleModules" class="RoleAction" method="setRoleModules">
+			<result name="success">/role/roleModules.jsp</result>
+		</action>
+		
+		<action name="saveRoleModules" class="RoleAction" method="saveRoleModules">
+			<result name="success">/ok.jsp</result>
+		</action>
+	</package>
+</struts>

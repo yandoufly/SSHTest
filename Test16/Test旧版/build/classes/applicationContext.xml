@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+<!-- 配置sessionFactoryBean -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+</bean>
+
+<!-- 配置DAO -->
+<import resource="applicationContext_dao.xml"/>
+<!-- 配置Service -->
+<import resource="applicationContext_service.xml"/>
+<!-- 配置Action -->
+<import resource="applicationContext_action.xml"/>
+
+<!-- 以tx标签类配置事务 -->
+<bean id="tm" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+<tx:advice id="tx" transaction-manager="tm">
+	<tx:attributes>
+		<tx:method name="add*" propagation="REQUIRED"/>
+		<tx:method name="record*" propagation="REQUIRED"/>
+		<tx:method name="commit*" propagation="REQUIRED"/>
+		<tx:method name="create*" propagation="REQUIRED"/>
+		<tx:method name="update*" propagation="REQUIRED"/>
+		<tx:method name="delete*" propagation="REQUIRED"/>
+		<tx:method name="count*" propagation="REQUIRED"/>
+		<tx:method name="get*" propagation="NEVER"/>
+	</tx:attributes>
+</tx:advice>
+
+<aop:config>
+	<aop:advisor advice-ref="tx" pointcut="execution(* service.*.*(..))"/>
+</aop:config>
+
+</beans>

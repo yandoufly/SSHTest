@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	
+	<package name="superPackage" extends="struts-default">
+	<!-- 声明拦截器 -->
+		<interceptors>
+			<interceptor name="LoginInterceptor" class="interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="MyDefaultStack">
+				<interceptor-ref name="LoginInterceptor"></interceptor-ref> 
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="MyDefaultStack"></default-interceptor-ref>
+		
+		<!-- 全局结果定义区 -->
+		<global-results>
+			<result name="login">/relogin.jsp</result>
+			<result name="timeOut">/timeOut.jsp</result>
+		</global-results>
+		
+		
+	</package>
+	
+	<!-- 配置包 -->
+	<package name="question" extends="superPackage">
+		
+		<action name="addQuestionPage">
+			<result>/addQuestion.jsp</result>
+		</action>
+
+		<action name="addQuestion" class="action.QuestionAction" method="addQuestion">
+			<result name="success">/ok.jsp</result>
+			<result name="input">/addQuestion.jsp</result>
+		</action>
+		
+		<action name="showAllQuestion" class="action.QuestionAction" method="showAllQuestion">
+			<result name="success">/showAllQuestion.jsp</result>
+		</action>
+		
+		<action name="deleteQuestion" class="action.QuestionAction" method="deleteQuestion">
+			<result name="success" type="chain">showAllQuestion</result>
+		</action>
+		
+		<action name="showQuestionInfo" class="action.QuestionAction" method="showQuestionInfo">
+			<result name="success">/updateQuestion.jsp</result>
+		</action>
+		
+		<action name="updateQuestion" class="action.QuestionAction" method="updateQuestion">
+			<result name="success"  type="chain">showAllQuestion</result>
+		</action>
+		
+	</package>
+	
+	<!-- 与考试相关action -->
+	<package name="exam" extends="superPackage">
+	
+		<action name="addExam" class="action.ExamAction" method="addExam">
+			<result name="success">/ok.jsp</result>
+		</action>
+		
+		<action name="showAllExam" class="action.ExamAction" method="showAllExam">
+			<result name="success">/showAllExam.jsp</result>
+		</action>
+		
+	    <action name="createExamPaper" class="action.ExamAction" method="createExamPaper">
+			<result name="success">/ok.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="showMyPaper" class="action.ExamAction" method="showMyPaper">
+			<result name="success">/showMyPaper.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 与答题相关 -->
+	<package name="paper" extends="superPackage">
+		
+		<interceptors>
+			<interceptor name="AutoCommitInterceptor" class="interceptor.AutoCommitInterceptor"></interceptor>
+			<interceptor name="PaperStateCheckInterceptor" class="interceptor.PaperStateCheckInterceptor"></interceptor>
+		</interceptors>
+		<!-- 开始考试 -->
+		<action name="beginDoQuestion" class="action.PaperAction" method="beginDoQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="AutoCommitInterceptor"></interceptor-ref>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+		</action>
+		
+		<!-- 继续考试 -->
+		<action name="continueQuestion" class="action.PaperAction" method="continueQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 下一题 -->
+		<action name="nextQuestion" class="action.PaperAction" method="nextQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 上一题 -->
+		<action name="preQuestion" class="action.PaperAction" method="preQuestion">
+			<result name="success">/doQuestion.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 提交 -->
+		<action name="commitExamPaper" class="action.PaperAction" method="commitExamPaper">
+			<result name="success">/result.jsp</result>
+			<interceptor-ref name="MyDefaultStack"></interceptor-ref>
+			<interceptor-ref name="PaperStateCheckInterceptor"></interceptor-ref>
+		</action>
+	
+	</package>
+	
+	<!-- 与用户相关action -->
+	<include file="struts_user.xml"></include>
+	
+	<!-- 与角色权限相关 -->
+	<include file="struts_role.xml"></include>
+</struts>
+

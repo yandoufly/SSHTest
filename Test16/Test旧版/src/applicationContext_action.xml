@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+<!-- 配置Action 
+如果把StrutsAction生命周期交给IOC管理的话，必须把Scope属性设置为prototype意味，每次从
+IOC容器中获取到的bean都是一个新的实例,否则，默认的Scope属性为singleton(单例),每次从IOC
+容器中获取到的bean都是同一个实例
+-->
+<bean id="questionAction" class="action.QuestionAction">
+	<property name="questionService" ref="questionService"></property>
+</bean>
+
+<bean id="examAction" class="action.ExamAction">
+	<property name="examService" ref="examService"></property>
+</bean>
+
+<bean id="studentAction" class="action.StudentAction">
+	<property name="studentService" ref="studentService"></property>
+</bean>
+
+<bean id="paperAction" class="action.PaperAction">
+	<property name="paperService" ref="paperService"></property>
+</bean>
+
+<bean id="roleAction" class="action.RoleAction">
+	<property name="roleService" ref="roleService"></property>
+</bean>
+
+</beans>

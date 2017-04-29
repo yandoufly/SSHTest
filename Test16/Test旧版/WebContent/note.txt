@@ -1,0 +1,30 @@
+<h1 class="type"><a href="javascript:void(0)">用户管理</a></h1>
+<ul class="MM">
+  <li><a href="addStudent.jsp" target="main">添加用户</a></li>
+</ul>
+
+<h1 class="type"><a href="javascript:void(0)">权限管理</a></h1>
+<ul class="MM">
+  <li><a href="addRole.jsp" target="main">添加角色</a></li>
+  <li><a href="showAllRole" target="main">设置角色权限</a></li>
+  <li><a href="showAllUser" target="main">设置用户角色</a></li>
+</ul>
+
+<h1 class="type"><a href="javascript:void(0)">题库管理</a></h1>
+<ul class="MM">
+  <li><a href="addQuestionPage" target="main">添加考题</a></li>
+  <li><a href="showAllQuestion" target="main">查询考题</a></li>
+</ul>
+
+<h1 class="type"><a href="javascript:void(0)">试卷管理</a></h1>
+<ul class="MM">
+  <li><a href="newExam.jsp" target="main">发布考试</a></li>
+</ul>
+
+<h1 class="type"><a href="javascript:void(0)">考试管理</a></h1>
+<ul class="MM">
+  <li><a href="showAllExam" target="main">我的考试</a></li>
+  <li><a href="showMyPaper" target="main">我的试卷</a></li>
+</ul>
+
+
