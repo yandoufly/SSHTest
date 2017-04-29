@@ -3,3 +3,4 @@ EmpTest：springmvc+spring+jdbc+mysql开发【员工管理系统】
 FenyeTest:使用servlet+jsp+model实现简单的分页类抽取实现
 ExamTest:提交在线考试源码
 itcastTax：SSH版国税协同平台
+SSH-3：SSH版本高度抽象各层后实现简单项目搭建
