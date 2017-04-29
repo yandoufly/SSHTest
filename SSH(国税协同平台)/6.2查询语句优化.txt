@@ -1,0 +1,58 @@
+FROM Info
+WHERE title like ? and state=?
+order by createTime DESC;
+
+条件查询(QueryHelper)
+1、查询条件语句hql：
+from子句：必定出现，而且只出现一次
+where子句：可选；但关键字where只出现一次
+order by子句：可选；但order by只出现一次
+
+2、查询条件值集合
+
+
+测试：
+1、新建com.yjy.core.util.QueryHelper类(重点)
+
+2、BaseDao接口及实现类
+	@Override
+	public List<T> findObjects(QueryHelper queryHelper) {
+		Query query = getSession().createQuery(queryHelper.getQueryListHql());
+		List<Object> parameters = queryHelper.getParameters();
+		if(parameters != null){
+			for(int i = 0; i < parameters.size(); i++){
+				query.setParameter(i, parameters.get(i));
+			}
+		}
+		return query.list();
+	}
+
+3、BaseService接口及实现类
+	@Override
+	public List<T> findObjects(QueryHelper queryHelper) {
+		return baseDao.findObjects(queryHelper);
+	}
+
+4、InfoAction类
+	//列表页面
+	public String listUI() throws Exception{
+		//加载分类集合
+		ActionContext.getContext().getContextMap().put("infoTypeMap", Info.INFO_TYPE_MAP);
+		QueryHelper queryHelper = new QueryHelper(Info.class, "i");
+		try {
+			if(info != null){
+				if(StringUtils.isNotBlank(info.getTitle())){
+					queryHelper.addCondition("i.title like ?", "%" + info.getTitle() + "%");
+				}
+				queryHelper.addCondition("i.state = ?", "1");
+			}
+			//根据创建时间降序排序
+			queryHelper.addOrderByProperty("i.createTime", QueryHelper.ORDER_BY_DESC);
+			infoList = infoService.findObjects(queryHelper);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return "listUI";
+	}
+

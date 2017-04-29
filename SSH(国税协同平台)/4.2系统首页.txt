@@ -1,0 +1,37 @@
+1、编写com.yjy.home.action.HomeAction.java
+	public String execute() throws Exception {
+		return "home";
+	}
+
+2、home-struts.xml
+
+	<package name="home-action" namespace="/" extends="base-default">
+		<action name="home_*" class="com.yjy.home.action.HomeAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/home/{1}.jsp</result>
+			<result name="home">/WEB-INF/jsp/home/home.jsp</result>
+		</action>
+	</package>
+
+
+3、导入home.jsp文件
+
+4、struts总配置文件中添加home-struts.xml配置
+
+5、测试
+http://localhost:8088/itcastTax14/sys/home.action
+
+6、添加nsfw的首页
+新建action：com.yjy.nsfw.home.action.HomeAction
+
+7、配置文件home-struts.xml
+
+8、在总配置文件中添加home-struts.xml配置
+
+9、在nsfw目录下添加
+frame.jsp
+left.jsp
+top.jsp
+
+10、在commons中添加
+bg.jsp
+welcome.jsp

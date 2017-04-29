@@ -1,0 +1,88 @@
+用户管理(entity,dao,service,action,conf)
+  -将配置文件添加到总配置文件中去
+  -日期插件
+
+1、编写User实体类及User.hbm.xml文件
+	public static String USER_STATE_VALID = "1";//有效
+	public static String USER_STATE_INVALID = "0";//无效
+2、编写UserDao接口及实现类，继承BaseDaoImpl<User>
+
+3、编写UserService接口及实现类
+
+4、编写UserAction类(实现CRUD)
+
+	//列表页面
+	public String listUI()
+
+	//跳转到新增页面
+	public String addUI()
+
+	//保存新增
+	public String add()
+
+	//跳转编辑页面
+	public String editUI()
+
+	//保存编辑
+	public String edit()
+
+	//删除
+	public String delete()
+
+	//批量删除
+	public String deleteSelected()
+
+5、编写配置文件
+user-spring.xml
+     <!-- 继承BaseDao -->
+     <bean id="userDao" class="com.yjy.nsfw.user.dao.impl.UserDaoImpl" parent="baseDao"></bean>
+    
+    <!-- 扫描service -->
+    <context:component-scan base-package="com.yjy.nsfw.user.service.impl"></context:component-scan>
+
+
+在总配置的spring文件添加：
+   
+    <!-- 所有业务dao的parent -->
+    <bean id="baseDao" abstract="true">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+ 
+
+user-struts.xml配置：
+		
+	<action name="user_*" class="com.yjy.nsfw.user.action.UserAction" method="{1}">
+		<result name="{1}">/WEB-INF/jsp/nsfw/user/{1}.jsp</result>
+		<result name="list" type="redirectAction">
+			<param name="actionName">user_listUI</param>
+		</result>
+	</action>
+
+6、编写userList.jsp
+①. 新增header.jsp
+
+    <title>用户管理</title>
+    <%@include file="/common/header.jsp" %> //引入header.jsp
+
+7、在网址输入
+http://localhost:8088/itcastTax12/nsfw/user_listUI.action //显示全部用户
+
+8、编写“新增”的js代码
+	//新增
+      	function doAdd(){
+      		document.forms[0].action = "${basePath}nsfw/user_addUI.action";
+      		document.forms[0].submit();
+      	}
+
+9、addUI.jsp中引入日期输入显示插件
+<script type="text/javascript" src="${basePath }js/datepicker/WdatePicker.js"></script>
+生日改为：
+<s:textfield id="birthday" name="user.birthday" readonly="true" onfocus="WdatePicker({'skin':'whyGreen','dateFmt':'yyyy-MM-dd'});" />
+
+10、在editUI.jsp中改成：
+ 	    <s:textfield id="birthday" name="user.birthday" readonly="true" 
+            	onfocus="WdatePicker({'skin':'whyGreen','dateFmt':'yyyy-MM-dd'});" >
+            	<s:param name="value"><s:date name="user.birthday" format="yyyy-MM-dd"/></s:param>
+            </s:textfield>
+
+

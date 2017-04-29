@@ -1,0 +1,69 @@
+1、获取头像(file,contentType,filename)
+
+2、UserAction.java
+	private File headImg;
+	private String headImgContentType;
+	private String headImgFileName;
+
+	//新增用户
+	public String add(){
+		if(user != null){
+			
+			//保存头像
+			if(headImg != null){
+				//1.保存到upload/user
+				String realPath = ServletActionContext.getServletContext().getRealPath("upload/user");
+				String fileName = UUID.randomUUID().toString().replace("-", "") + headImgFileName.substring(headImgFileName.lastIndexOf("."));
+				
+				//复制文件
+				try {
+					FileUtils.copyFile(headImg, new File(realPath, fileName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//2.设置用户头像路径
+				user.setHeadImg("user/" + fileName); //user/123.jpg
+			}
+			
+			userService.save(user);
+		}
+		return "list";
+	}
+
+
+3、在页面editUI.jsp:
+	<td class="tdBg" width="200px">头像：</td>
+            <td>
+                <s:if test="%{user.headImg != null && user.headImg != ''}">
+                    <img src="${basePath }upload/<s:property value='user.headImg' />" width="100" height="100"/>
+                	<s:hidden name="user.headImg"/>
+                </s:if>
+                <input type="file" name="headImg"/>
+            </td>
+
+4、在UserAction修改edit()方法
+	public String edit(){
+		if(user != null){
+			
+			//保存头像
+			if(headImg != null){
+				//1.保存到upload/user
+				String realPath = ServletActionContext.getServletContext().getRealPath("upload/user");
+				String fileName = UUID.randomUUID().toString().replace("-", "") + headImgFileName.substring(headImgFileName.lastIndexOf("."));
+				
+				//复制文件
+				try {
+					FileUtils.copyFile(headImg, new File(realPath, fileName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//2.设置用户头像路径
+				user.setHeadImg("user/" + fileName); //user/123.jpg
+			}
+			
+			userService.update(user);
+		}
+		return "list";
+	}

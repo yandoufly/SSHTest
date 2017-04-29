@@ -1,0 +1,18 @@
+
+校验账号唯一性
+ -需要校验的地方:新增与编辑
+
+校验时机：当账号的值发生变化时；保存表时
+
+校验账号唯一性：
+前段:ajax
+后端:
+1、获取账号
+2、校验
+2.1、根据账号查询用户们
+
+使用工具类检验user.getAccount() != null && !user.getAccount().equals("")
+ -StringUtils.isNotBlank(user.getAccount());
+
+ajax中：
+ -async:false, //非异步提交

@@ -1,0 +1,15 @@
+1. 创建SysResultAction，继承StrutsResultSupport，重写doExecute()方法
+
+2. 创建 抽象BaseAction类，继承ActionSupport
+
+3. struts.xml文件中 编写 返回结果类型
+		<!-- 返回结果类型 -->
+		<result-types>
+			<result-type name="error" class="com.yjy.core.action.SysResultAction"></result-type>
+		</result-types>
+		<!-- 全局结果 -->
+		<global-results>
+			<result name="error" type="error">/WEB-INF/jsp/error.jsp</result> //新增
+			<result name="sysError">/WEB-INF/jsp/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/error.jsp</result>
+		</global-results>

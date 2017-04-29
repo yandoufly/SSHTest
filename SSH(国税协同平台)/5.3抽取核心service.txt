@@ -1,0 +1,31 @@
+1. 新建com.yjy.core.service.BaseService<T>
+
+2. 新建com.yjy.core.service.impl.BaseServiceImpl<T>
+---问题：Dao如何传入去
+public class BaseServiceImpl<T> implements BaseService<T> {
+
+	private BaseDao<T> baseDao;
+	public void setBaseDao(BaseDao<T> baseDao) {
+		this.baseDao = baseDao;
+	}
+
+
+3. 修改InfoService接口
+public interface InfoService extends BaseService<Info> {
+}
+
+4. 修改InfoServiceImpl类
+@Service("infoService")
+public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoService {
+
+	private InfoDao infoDao;
+	@Resource
+	public void setInfoDao(InfoDao infoDao) {
+		super.setBaseDao(infoDao);
+		this.infoDao = infoDao;
+	}
+}
+
+6. 改造UserService接口及实现类
+
+7. 改造RoleService接口及实现类

@@ -1,0 +1,29 @@
+1、新建com.yjy.core.constant.Constant.java
+
+2、角色与权限关系：多对多
+
+系统权限：行政管理、后勤服务、在线学习、纳税服务、我的空间
+
+管理员：在线学习，纳税服务，我的空间
+一般用户：我的空间
+
+角色表：role
+角色ID,角色名称，状态
+1	管理员		1
+2	一般用户	1
+
+角色权限表role_privilege
+角色ID，权限code
+1	nsfw
+1	space
+2	space
+
+
+权限表：privilege
+权限code，权限名称
+nsfw	纳税服务
+space	我的空间
+
+联合主键：实现Serializable;重写 hashCode,equals方法
+
+

@@ -1,0 +1,46 @@
+1、新增BaseDao接口及实现类
+	@Override
+	public List<T> findObjects(String hql,List<Object> parameters) {
+		Query query = getSession().createQuery(hql);
+		if(parameters != null){
+			for(int i = 0; i < parameters.size(); i++){
+				query.setParameter(i, parameters.get(i));
+			}
+		}
+		return query.list();
+	}
+
+2、新增BaseService接口及实现类
+	@Override
+	public List<T> findObjects(String hql, List<Object> parameters) {
+		return baseDao.findObjects(hql, parameters);
+	}
+
+3、修改InfoAction
+	//列表页面
+	public String listUI() throws Exception{
+		//加载分类集合
+		ActionContext.getContext().getContextMap().put("infoTypeMap", Info.INFO_TYPE_MAP);
+		String hql = "FROM Info i";
+		List<Object> parameters = new ArrayList<Object>();
+		try {
+			if(info != null){
+				if(StringUtils.isNotBlank(info.getTitle())){
+					hql += " WHERE i.title like ?";
+					parameters.add("%" + info.getTitle() + "%");
+				}
+			}
+			//根据创建时间降序排序
+			hql += " ORDER BY i.createTime DESC";
+			infoList = infoService.findObjects(hql, parameters);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+4、新增nsfw/info/listUI.jsp文件中
+	//搜索
+  	function doSearch(){
+  		document.forms[0].action = "${basePath}nsfw/info_listUI.action";
+  		document.forms[0].submit();
+  	}
+

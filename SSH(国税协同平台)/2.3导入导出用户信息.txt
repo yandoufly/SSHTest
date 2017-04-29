@@ -1,0 +1,42 @@
+----导出用户列表
+1、 listUI.jsp
+  	//导出
+  	function doExportExcel(){
+  		window.open("${basePath}nsfw/user_exportExcel.action");
+  	}
+
+2、UserAction.java
+	//导出用户列表
+	public String exportExcel(){
+		try {
+			//1、查找用户列表
+			userList = userService.findObjects();
+			//2、导出
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("application/x-excel");
+			response.setHeader("Content-Disposition", "attachment;filename=" + new String("用户列表.xls".getBytes(), "ISO-8859-1"));
+			ServletOutputStream outputStream = response.getOutputStream();
+			
+			userService.exportExcel(userList, outputStream); //处理用户导出
+			if(outputStream != null){
+				outputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "list";
+	}
+
+3、userServiceImpl.java
+	@Override
+	public void exportExcel(List<User> userList, ServletOutputStream outputStream) {
+		ExcelUtil.exportExcel(userList, outputStream);
+	}
+
+4、编写ExcelUtil,完成导出功能
+
+
+
+
+
+-----------导入用户列表

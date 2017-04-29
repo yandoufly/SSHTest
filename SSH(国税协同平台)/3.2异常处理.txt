@@ -1,0 +1,58 @@
+系统可能出现的异常：分类
+dao：比较致命的操作异常，是会有很大影响整次的请求，(不包装)
+service：业务层的异常信息需要自定义
+action：控制层的异常信息需要自定义
+
+
+1、com.yjy.core.exception中创建自定义异常类
+	ActionException.java
+	ServiceException.java
+	SysException.java
+
+2、测试
+>UserService.java
+public List<User> findObjects() throws ServiceException {
+	try {
+		int i = 1/0;
+		
+	} catch (Exception e) {
+		throw new ServiceException("service 出错！！ " + e.getMessage());
+	}
+	return userDao.findObjects();
+}
+>UserAction.java
+public String listUI() throws ActionException{
+	try {
+		userList = userService.findObjects();
+	} catch (ServiceException e) {
+		throw new ActionException("Action 层出错！！" + e.getMessage());
+	}
+	return "listUI";
+}
+
+>struts.xml总配置文件中
+
+	<!-- 配置全局结果及异常处理映射 -->
+	<package name="base-default">
+		<!-- 全局结果 -->
+		<global-results>
+			<result name="sysError">/WEB-INF/jsp/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+		
+		<!-- 全局异常映射 -->
+		<global-exception-mappings>
+			<exception-mapping result="sysError" exception="com.yjy.core.exception.SysException"></exception-mapping>
+			<exception-mapping result="input" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+
+>error.jsp
+    <img src="<%=request.getContextPath() %>/images/common/error.jpg">
+    <br>
+    <s:if test="exception.errorMsg != '' && exception.errorMsg != null">
+    	<s:property value="exception.errorMsg"/>
+    </s:if>
+    <s:else>
+    	操作失败！<s:property value="exception.message"/>
+    </s:else>

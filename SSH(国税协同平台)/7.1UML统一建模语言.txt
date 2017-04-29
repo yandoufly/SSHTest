@@ -1,0 +1,19 @@
+计算机发展：程序设计、软件设计、软件工程
+
+
+1、安装
+
+2、基本使用
+
+1. 用例图：Use Case Diagram
+参与者(Actor)
+用例（Use Case）
+关联关系（Association）
+包含关系（Include）
+扩展关系（Extend）
+泛化关系（Generalization）
+
+
+2.类图：Class Diagram
+
+

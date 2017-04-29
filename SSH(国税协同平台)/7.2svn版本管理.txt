@@ -1,0 +1,58 @@
+1、安装
+
+检测版本
+cmd >svn --version
+
+>svnadmin --help //查看帮助文档 
+
+svnadmin create --help //查看创建
+svnadmin create D:\svnworkspace //创建版本库路径
+
+svnserve -d -r D:\svnworkspace //方式一：命令行来启动版本库路径
+
+在桌面右键--》SVN Checkout:（URL of repository为：svn://localhost）-》点击ok
+
+
+在系统服务中注册svn服务，需要以管理员权限运行
+sc create svn binPath="C:\Program Files\TortoiseSVN\bin\svnserve.exe --service -r D:\svnworkspace" DisplayName="svn服务"
+
+在 服务 中能够看到"svn服务"。
+启动该服务后，：在桌面右键--》SVN Checkout:（URL of repository为：svn://localhost）-》点击ok
+
+
+删除系统服务中的 服务
+sc delete 服务ID
+
+
+二、使用：
+
+1. 修改D:\svnworkspace\conf\svnserve.conf文件
+anon-access = read  //匿名读取
+auth-access = write //账号写入
+password-db = passwd //账号秘密存放在passwd文件中
+
+2. 修改D:\mysvn\svnserver\20160811svn\conf\passwd文件
+suerfly = 123
+
+3.在新建的文件夹localhost中
+新建文件test.txt,右键点击TortoiseSVN中的Add选项，把这文件添加到库中去
+ 右键SVN commit 
+ 右键SVN update
+
+
+右键点击TortoiseSVN中的Repository Browser选项，查看该版本的信息
+ 右键--show log
+
+
+右键选show log,查看日志文件
+
+删除文件
+先进入服务器端，将文件删除，再回到资源文件夹中选择SVN update将版本同步。
+
+
+有两个人开发时，解决两个人在同一个文件编写内容不同。
+ 前一个人先commit提交，后面一个人再commit，会出现该文件过时，点击update后出现冲突，
+右击TortoiseSVN选择Edit conflicts选项，就会出现版本之间的如何整合。整合后选择Mark as resolved保存,再提交到版本库中。
+
+
+

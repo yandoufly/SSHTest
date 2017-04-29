@@ -1,0 +1,79 @@
+1、excel基本元素
+工作簿 HSSFWorkbook\XSSFWorkbook
+工作表 HSSFSheet\XSSFSheet
+行 HSSFRow\XSSFRow
+单元格 HSSFCell\XSSFCell
+注：HSSF为03版本的，XSSF为07版本的
+2、导入的jar包
+dom4j-1.6.1.jar
+poi-3.11-20141221.jar
+poi-ooxml-3.11-20141221.jar
+poi-ooxml-schemas-3.11-20141221.jar
+xmlbeans-2.6.0.jar
+
+3、------操作excel
+
+创建07：
+	//1、创建工作簿
+	XSSFWorkbook book = new XSSFWorkbook();
+	//2、创建工作表
+	XSSFSheet sheet = book.createSheet("student"); //指定工作表名
+	//3、创建行，创建第3行
+	XSSFRow row = sheet.createRow(3);
+	//4、创建单元格
+	XSSFCell cell = row.createCell(3);
+	cell.setCellValue("hello world!!");
+	
+	//输出到硬盘
+	FileOutputStream outputStream = new FileOutputStream("D:\\测试.xlsx");
+	//把excel输出到具体地址
+	book.write(outputStream);
+	book.close();
+	outputStream.close();
+读取03和07版本的Excel：
+public void testRead03And07() throws Exception{
+	String filename = "D:\\测试.xlsx";
+	FileInputStream inputStream = new FileInputStream(filename );
+	
+	if(filename.matches("^.+\\.(?i)((xls)|(xlsx))$")){ //判断是否问excel文档
+		boolean is03Excel = filename.matches("^.+\\.(?i)(xls)$");
+		//1、读取工作簿
+		Workbook book = is03Excel? new HSSFWorkbook(inputStream) : new XSSFWorkbook(inputStream);
+		//2、读取工作表
+		Sheet sheet = book.getSheet("student"); //指定工作表名
+		//3、读取行，读取第3行
+		Row row = sheet.getRow(3);
+		//4、读取单元格
+		Cell cell = row.getCell(3);
+		System.out.println("第四行第四列内容为：" + cell.getStringCellValue());
+		
+		book.close();
+		inputStream.close();
+	}
+}
+
+
+4、----样式操作
+
+合并单元格对象(CellRangeAddress) 属于工作簿，应用于工作表
+ -CellRangeAddress(起始行，终行，起始列，终列)
+ -sheet.addMergedRegion(CellRangeAddress);
+
+样式 属于工作簿，应用于单元格
+ -HSSFCellStyle style = workbook.createCellStyle();
+ -style.setAlignment(HSSFCellStyle.ALIGH_CENTER); //水平居中
+ -cell.setCellStyle(style); //加载样式
+
+创建字体
+ -HSSFFont font = workbook.createFont();
+ -font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); //加粗字体
+ -font.setFontHeightInPoint((short) 16); //设置字体大小
+ -style.setFont(font); //加载字体
+ -cell.setCellStyle(style); //加载样式
+
+单元格背景
+
+
+
+
+

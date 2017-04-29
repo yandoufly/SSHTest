@@ -1,0 +1,50 @@
+问题描述：
+ -在执行"编辑"或"删除"后，标题内容的信息不见了
+解决:
+
+listUI.action--编辑--editUI.action---转发---editUI.jsp--保存--edit.action--重定向-listUI.action
+①.editUI.action:中出现查询条件覆盖
+②.editUI.jsp:没有暂存查询条件值
+③.edit.action:没有传递条件
+
+
+info-struts.xml文件的重定向时在网址附上原来标题信息
+	<result name="list" type="redirectAction">
+		<param name="actionName">info_listUI</param>
+		<param name="info.title">${strTitle}</param>
+		<param name="encode">true</param>
+	</result>
+
+
+解决中文乱码
+1、InfoAction类中
+private String strTitle; get/set方法  //新增
+	①. listUI方法：
+	if(StringUtils.isNotBlank(info.getTitle())){
+		info.setTitle(URLDecoder.decode(info.getTitle(), "utf-8"));    //新增
+		queryHelper.addCondition("i.title like ?", "%" + info.getTitle() + "%");
+	}
+
+	②.public String editUI(){
+		//加载分类集合
+		ActionContext.getContext().getContextMap().put("infoTypeMap", Info.INFO_TYPE_MAP);
+		if (info != null && info.getInfoId() != null) {
+			//解决查询条件覆盖问题
+			strTitle = info.getTitle();   //新增
+			info = infoService.findObjectById(info.getInfoId());
+		}
+		return "editUI";
+	}
+	③.public String addUI(){
+		//解决标题内容回显
+		strTitle = info.getTitle();   //新增
+		//加载分类集合
+		ActionContext.getContext().getContextMap().put("infoTypeMap", Info.INFO_TYPE_MAP);
+		info = new Info();
+		info.setCreateTime(new Timestamp(new Date().getTime()));
+		return "addUI";
+	}
+
+2、editUI.jsp文件和addUI.jsp文件中：
+     <!-- 暂存查询条件值 -->
+    <s:hidden name="strTitle"/>

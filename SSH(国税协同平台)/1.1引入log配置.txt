@@ -1,0 +1,8 @@
+1、添加jar包
+com.springsource.org.apache.log4j-1.2.15.jar
+
+2、配置文件log4j.properties
+log4j.appender.R.File=D:/mylog/mylog.log
+
+3、添加jar包
+slf4j-log4j12-1.6.1.jar

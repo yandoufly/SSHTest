@@ -1,0 +1,104 @@
+
+登录：
+1、获取账号和密码
+2、通过账号和密码查询用户表，如果查询有记录说明登录成功
+2.1、登录成功：
+2.1.1、保存用户信息到session中
+2.1.2、***
+2.1.3、将用户登录信息记录到日志文件中
+2.1.4、重定向跳转到首页
+
+
+2.2、登录失败：
+	直接跳转到登录页面并显示错误信息
+
+
+
+退出登录：
+
+//退出，注销
+public String logout(){
+	//清除session中保存的用户
+	ServletActionContext.getRequest().getSession().removeAttribute(Constant.USER);
+	return toLoginUI();
+}
+
+
+编写登录过滤器：
+user_listUI.action
+login_toLoginUI.action
+非登录请求:
+ -从session中获取用户信息；如果能获取到用户信息说明已经登录，则放行；如果没有用户信息则说明没有登录过则跳转到登录页面。
+请求登录：
+ -直接放行
+
+1、编写过滤器LoginFilter，继承javax.servlet.Filter;
+
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
+		String uri = request.getRequestURI();
+		//判断当前请求地址是否是登录请求地址
+		if(!uri.contains("sys/login_")){
+			//非登录请求
+			if(request.getSession().getAttribute(Constant.USER) != null){
+				//登录过了，直接放行
+				chain.doFilter(request, response);
+			}else{
+				//没有登录，跳转登录页面
+				response.sendRedirect(request.getContextPath() + "/sys/login_toLoginUI.action");
+			}
+		}else{
+			//登录请求，直接放行
+			chain.doFilter(request, response);
+		}
+	}
+
+
+2、在web.xml文件中配置过滤器
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.yjy.core.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+
+
+
+权限鉴定：
+前提：①.用户信息 ②.将要访问的系统标识
+
+鉴定：
+根据将要访问的系统标识符和当前的登录信息，查询用户的所有权限中是否包含系统标识符(code)，
+如果包含有说明有该权限则放行可以访问特定系统，如果在用户权限中没有系统标识符对应的权限
+说明没有权限跳转到
+
+PermissionCheck
+判断某用户是否含有特定系统标识符的权限，返回true标识有权限，false表示没有权限
+
+1、修改LoginFilter
+
+2、编写PermissionCheck接口及实现类
+	//得到bean实例对象
+	WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());				
+	PermissionCheck pc = (PermissionCheck)applicationContext.getBean("permissionCheck");
+
+3、修改User
+private List<UserRole> userRoles; //新增
+
+4、修改LoginAction中login方法
+根据用户查询该用户的所有角色
+	//2.1.2、***根据用户查询该用户的所有角色
+	user.setUserRoles(userService.getUserRolesByUserId(user.getId()));
+
+5、在application中配置
+    <!-- 注册权限鉴定类 -->
+    <bean name="permissionCheck" class="com.yjy.core.permission.Impl.PermissionCheckImpl"></bean>
+
+
+
+

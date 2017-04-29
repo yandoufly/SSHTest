@@ -1,0 +1,57 @@
+
+jdk timer
+① 继承TimerTask
+② 指定Timer执行频率
+
+1、新建MyTimerTask，继承TimerTask，重写run方法
+2、新建MyTimer,测试MyTimerTask类，
+
+
+spring继承quartz工具
+1、加入jar包(两个)
+
+新建QuartzTask类
+编写quartz-spring.xml配置信息
+ 1.制定任务信息：设置执行对象，设置执行对象中对应的执行方法，是否可以同步执行
+ 2.制定任务执行时机:（任务执行触发器）：
+
+
+测试：
+1. 编写MyTimerTask，继承TimerTask，并重写run()方法
+public void run() {
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	System.out.println("doing TimerTask..." + sdf.format(new Date()));
+}
+2. 编写MyTimer测试类：
+public static void main(String[] args) {
+	Timer timer = new Timer();
+	//延迟2秒执行，每3秒执行一次
+	timer.schedule(new MyTimerTask(), 2000, 3000);
+	
+}
+
+2、spring整合quartz：
+1. 导入jar包
+org.springframework.context-3.0.2.RELEASE.jar
+quartz-1.8.6.jar
+
+2. 编写自定义类QuartzTask
+public void doSimpleTriggerTask() {
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	System.out.println("doing simpleTrigger task..." + sdf.format(new Date()));
+}
+
+public void doCronTriggerTask() {
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	System.out.println("doing cronTrigger task..." + sdf.format(new Date()));
+}
+
+3. 编写spring的配置文件quartz-spring.xml
+   <!-- 注册一个普通bean -->
+   <!-- 1、制定任务信息信息 -->
+   <!-- 2、制定任务执行时机（任务执行触发器） -->
+   <!-- 3、设置调度工厂 -->
+
+   
+
+

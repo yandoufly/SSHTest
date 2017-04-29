@@ -1,0 +1,133 @@
+
+一、关系表如下：
+用户：user
+用户ID ， 名称
+1	用户1
+2	用户2
+
+用户角色：user_role
+用户id， 角色id
+1	1
+1	2
+2	2
+
+角色：role
+角色id， 名称
+1	管理员
+2	普通用户
+
+
+二、编写代码
+1、编写UserRole
+
+2、编写UserRoleId
+
+3、编写hbm.xml配置文件
+<class name="com.yjy.nsfw.user.entity.UserRole" table="user_role">
+	<composite-id name="id" class="com.yjy.nsfw.user.entity.UserRoleId">
+		<key-many-to-one name="role" lazy="false" class="com.yjy.nsfw.role.entity.Role">
+			<column name="role_id"></column>
+		</key-many-to-one>
+		<key-property name="userId" type="java.lang.String">
+			<column name="user_id" length="32"></column>
+		</key-property>
+	</composite-id>
+</class>
+
+
+4、UserAction：
+//跳转到新增页面
+public String addUI(){
+	//加载角色列表
+	ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects()); //新增
+	return "addUI";
+}
+
+5、user/addUI.jsp
+	<td class="tdBg" width="200px">角色：</td>
+            <td>
+            	<s:checkboxlist list="#roleList" name="userRoleIds" listKey="roleId" listValue="name"></s:checkboxlist>
+            </td>
+
+6、测试，查看是否显示出来角色
+http://localhost:8088/itcastTax14/nsfw/user_addUI.action
+
+7、编写保存功能
+add()中修改为userService.saveUserAndRole(user, userRoleIds);
+edit()中修改为userService.updateUserAndRole(user, userRoleIds);
+
+8、UserService类
+//添加用户和该用户的角色
+public void saveUserAndRole(User user, String... roleId);
+//保存用户和该用户的角色
+public void updateUserAndRole(User user, String... roleId);
+
+public void saveUserAndRole(User user, String... roleIds) {
+	//1、保存用户
+	save(user);
+	//2、保存用户对应角色
+	if(roleIds != null){
+		for(String roleId : roleIds){
+			userDao.saveUserRole(new UserRole(new UserRoleId(new Role(roleId), user.getId())));
+		}
+	}
+	
+}
+
+public void updateUserAndRole(User user, String... roleIds) {
+	//1、根据用户删除该用户所有角色
+	userDao.deleteUserRoleByUserId(user.getId());
+	//2、更新用户
+	update(user);
+	//3、保存用户对应的角色
+	if(roleIds != null){
+		for(String roleId : roleIds){
+			userDao.saveUserRole(new UserRole(new UserRoleId(new Role(roleId), user.getId())));
+		}
+	}
+}
+
+
+9、dao层
+public void saveUserRole(UserRole userRole) {
+	getHibernateTemplate().save(userRole);
+}
+
+public void deleteUserRoleByUserId(String id) {
+	//delete from user_role where user_id=id
+	String hql = "DELETE FROM UserRole WHERE id.userId=?";
+	Query query = getSession().createQuery(hql);
+	query.setParameter(0, id);
+	query.executeUpdate();
+}
+
+10、user/editUI.jsp
+角色：
+<s:checkboxlist list="#roleList" name="userRoleIds" listKey="roleId" listValue="name"></s:checkboxlist>
+
+11、修改UserAction
+	public String editUI(){
+		//加载角色列表
+		ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects());
+		
+		if (user != null && user.getId() != null) {
+			user = userService.findObjectById(user.getId());
+			
+			//处理角色回显
+			List<UserRole> list = userService.getUserRolesByUserId(user.getId());
+			if(list!=null && list.size()>0){
+				userRoleIds = new String[list.size()];
+				for(int i = 0; i < list.size(); i++){
+					userRoleIds[i] = list.get(i).getId().getRole().getRoleId();
+				}
+			}
+			
+		}
+		return "editUI";
+	}
+
+12.修改UserService
+13.修改UserDao
+
+
+查询出用户后；需要知道这个用户有哪些角色
